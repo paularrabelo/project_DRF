@@ -18,10 +18,18 @@ API V1
 """
 
 class CursosAPIView(generics.ListCreateAPIView):
+    permission_classes = (
+        SuperUser,
+        permissions.DjangoModelPermissions,
+    )
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
 
 class CursoAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (
+        SuperUser,
+        permissions.DjangoModelPermissions,
+    )
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
 
