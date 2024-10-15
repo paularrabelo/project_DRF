@@ -11,6 +11,11 @@ WORKDIR /app
 # Atualizar pip
 RUN pip install --upgrade pip
 
+#instala as dependencias do postgres
+RUN apt-get update \
+    && apt-get -y install libpq-dev gcc \
+    && pip install psycopg2
+
 # Copiar arquivos de requisitos e instalar dependências
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
