@@ -18,6 +18,15 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
+    
+    - name: Install django
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade django
+
+    - name: Install dependencies
+      shell: bash
+      run: python -m django install
 
     - name: Test
       run: |
