@@ -21,7 +21,7 @@ jobs:
     
     - name: Ativando o ambiente virtual
       shell: bash
-      run: source venv/bin/activate
+      run: .\venv\Scripts\activate
 
     - name: Install django
       run: |
