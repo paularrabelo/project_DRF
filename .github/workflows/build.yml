@@ -24,9 +24,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Conexão
-      run: |
-        python manage.py runserver
 
     - name: Test
       run: |
