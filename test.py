@@ -6,7 +6,7 @@ class TestCursos(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        cls.headers = {'Authorization': 'Token 85520952b1f4d4edf20ba5eef87f7df0d89e84e2'}
+        cls.headers = {'Authorization': 'Token 8a2f1eade9407db7d59efc72e4821564ece69825'}
         cls.url_cursos = 'http://localhost:8000/api/v2/cursos/'
 
     
@@ -18,8 +18,8 @@ class TestCursos(unittest.TestCase):
     
     def test_post_curso(self):
         teste = {
-            "titulo": "Teste novo 3",
-            "url": "http://www.testenovo3.com.br"
+            "titulo": "New Curso de test",
+            "url": "http://www.newcursotest.com.br"
         }
 
         response = requests.post(url=self.url_cursos, headers=self.headers, json=teste)
@@ -30,18 +30,18 @@ class TestCursos(unittest.TestCase):
     
     def test_put_curso(self):
         put = {
-            "titulo": "Nova Atualização",
-            "url": "http://www.atualizacaoteste.com.br"
+            "titulo": "Atualização nova",
+            "url": "http://www.atualizacaonova.com.br"
         }
 
-        response = requests.put(url=f'{self.url_cursos}8/', headers=self.headers, json=put)
+        response = requests.put(url=f'{self.url_cursos}10/', headers=self.headers, json=put)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['titulo'], put['titulo'])
 
     
     def test_delete_curso(self):
-        response = requests.delete(url=f'{self.url_cursos}9/', headers=self.headers)
+        response = requests.delete(url=f'{self.url_cursos}13/', headers=self.headers)
 
         self.assertEqual(response.status_code, 204)
 

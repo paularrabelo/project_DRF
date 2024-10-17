@@ -2,6 +2,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework import generics
 
 from rest_framework import viewsets
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -18,10 +19,6 @@ API V1
 """
 
 class CursosAPIView(generics.ListCreateAPIView):
-    permission_classes = (
-        SuperUser,
-        permissions.DjangoModelPermissions,
-    )
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
 
@@ -50,6 +47,7 @@ class AvaliacaoAPIView(generics.RetrieveUpdateDestroyAPIView):
         if self.kwargs.get('curso_pk'):
             return get_object_or_404(self.get_queryset(), curso_id=self.kwargs.get('curso_pk'), pk=self.kwargs.get('avaliacao_pk'))
         return get_object_or_404(self.get_queryset(), pk=self.kwargs.get('avaliacao_pk'))
+
     
 
 """
@@ -57,10 +55,6 @@ API V2
 """
 
 class CursoViewSet(viewsets.ModelViewSet):
-    permission_classes = (
-        SuperUser,
-        permissions.DjangoModelPermissions,
-    )
     queryset = Curso.objects.all()
     serializer_class = CursoSerializer
 
