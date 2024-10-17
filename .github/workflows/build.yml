@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.9, 3.12]
+        python-version: [3.12]
 
     runs-on: ubuntu-latest
 
@@ -18,19 +18,11 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    
-    - name: Ativando o ambiente virtual
-      shell: bash
-      run: .\venv\Scripts\activate
-
-    - name: Install django
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install --upgrade django
 
     - name: Install dependencies
-      shell: bash
-      run: pip install -r requirements.txt
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
     - name: Test
       run: |
