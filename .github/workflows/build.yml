@@ -61,6 +61,3 @@ jobs:
     - name: Start the web server
       run: docker-compose run web
 
-volumes:
-  postgres_data:
-  app_data:
