@@ -1,63 +1,36 @@
-name: Deploy App
+name: Python application
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
-  deploy:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.8, 3.9]
+
     runs-on: ubuntu-latest
 
-    services:
-      db:
-        image: postgres:13.0-alpine
-        ports:
-          - 5434:5432
-        options: > 
-          --health-cmd="pg_isready -U escola_dev" 
-          --health-interval=10s 
-          --health-timeout=5s 
-          --health-retries=5
-        env:
-          POSTGRES_USER: escola_dev
-          POSTGRES_PASSWORD: escola_dev
-          POSTGRES_DB: escola_dev_db
-        volumes:
-          - postgres_data:/var/lib/postgresql/data/
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
       with:
-        python-version: '3.9'
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install poetry
+      run: |
+        python -m ensurepip
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade poetry
+    - name: View poetry --help
+      run: poetry --help
 
     - name: Install dependencies
+      shell: bash
+      run: python -m poetry install
+
+    - name: Test
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Run migrations
-      run: python manage.py migrate
-
-    - name: Run tests
-      run: python manage.py test
-
-    - name: Build and run the application
-      run: |
-        docker-compose up -d
-        docker ps
-
-    - name: Wait for database to be ready
-      run: |
-        until docker exec $(docker ps -q --filter "name=db") pg_isready -U escola_dev; do
-          echo "Waiting for Postgres database..."
-          sleep 5
-        done
-
-    - name: Start the web server
-      run: docker-compose run web
-
+        poetry run python manage.py test
