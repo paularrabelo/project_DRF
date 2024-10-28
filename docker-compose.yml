@@ -1,45 +1,29 @@
-name: Python application
+version: '3.9'
 
-on: [push]
+services:
+  db:
+    image: postgres:13.0-alpine
+    ports:
+      - 5434:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=escola_dev
+      - POSTGRES_PASSWORD=escola_dev
+      - POSTGRES_DB=escola_dev_db
 
-jobs:
- build:
-  strategy:
-   fail-fast: false
-   matrix:
-    python-version: [3.9, 3.12]
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - app_data:/usr/src/app/
+    ports:
+      - 8000:8000
+    env_file:
+      - ./env.dev
+    depends_on:
+      - db
 
-  runs-on: ubuntu-latest
-
-  steps:
-  - uses: actions/checkout@v2
-
-  - name: Set up Python ${{ matrix.python-version }}
-    uses: actions/setup-python@v2
-    with:
-    python-version: ${{ matrix.python-version }}
-
-  - name: Install dependencies
-    run: |
-      python -m pip install --upgrade pip
-      pip install -r requirements.txt
-
-  # Adicionando migrações do banco de dados
-  - name: Run migrations
-    run: |
-      python manage.py migrate
-
-  # Iniciar o servidor Django em segundo plano
-  - name: Run Django server
-    run: |
-      python manage.py runserver 0.0.0.0:8000 &
-    env:
-      DJANGO_SETTINGS_MODULE: escola.settings # Altere para o seu módulo de configurações
-
-  # Adicionando um tempo de espera para o servidor inicializar
-  - name: Wait for server to start
-    run: sleep 5
-
-  - name: Test
-    run: |
-      python manage.py test
+volumes:
+  postgres_data:
+  app_data:
