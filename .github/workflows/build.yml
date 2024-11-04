@@ -39,5 +39,5 @@ jobs:
       SQL_USER: escola_dev
       SQL_PASSWORD: escola_dev
       SQL_HOST: db
-      SQL_PORT: 5434
+      SQL_PORT: 5432
       
