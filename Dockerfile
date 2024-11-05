@@ -23,5 +23,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar todo o código do projeto para o contêiner
 COPY . /app/
 
+# Exponha a porta 8000
+EXPOSE 8000
+
 # Comando para iniciar o servidor Django
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

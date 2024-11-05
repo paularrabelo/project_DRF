@@ -4,13 +4,14 @@ services:
   db:
     image: postgres:13.0-alpine
     ports:
-      - 5434:5432
+      - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=escola_dev
       - POSTGRES_PASSWORD=escola_dev
       - POSTGRES_DB=escola_dev_db
+
 
   web:
     build: .
