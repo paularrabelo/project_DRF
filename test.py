@@ -7,7 +7,7 @@ class TestCursos(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.headers = {'Authorization': 'Token 8a2f1eade9407db7d59efc72e4821564ece69825'}
-        cls.url_cursos = 'http://localhost:8000/api/v2/cursos/'
+        cls.url_cursos = '/api/v2/cursos/'
 
     
     def test_get_cursos(self):
