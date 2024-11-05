@@ -1,13 +1,14 @@
 import requests
-import unittest
+from django.test import LiveServerTestCase
 
 
-class TestCursos(unittest.TestCase):
+class TestCursos(LiveServerTestCase):
     
     @classmethod
     def setUpClass(cls):
+        super().setUpClass()
         cls.headers = {'Authorization': 'Token 8a2f1eade9407db7d59efc72e4821564ece69825'}
-        cls.url_cursos = '/api/v2/cursos/'
+        cls.url_cursos = f'{cls.live_server_url}/api/v2/cursos/'
 
     
     def test_get_cursos(self):
