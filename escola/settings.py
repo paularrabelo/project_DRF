@@ -86,7 +86,7 @@ DATABASES = {
         "USER": os.environ.get("SQL_USER", "user"),
         "PASSWORD": os.environ.get("SQL_PASSWORD", "password") ,
         "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5434"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
         'OPTIONS': {
             'client_encoding': 'UTF8',
         },
