@@ -1,38 +1,31 @@
-name: Python Pull Request Workflow
-on: [pull_request]
-jobs:
+name: Test Workflow
 
-  qa:
-    name: Quality check
-    runs-on: ubuntu-18.04
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Set up Python
-        uses: actions/setup-python@master
+        uses: actions/setup-python@v2
         with:
-          python-version: 3.12
-      - name: Install poetry
+          python-version: '3.12'
+
+      - name: Install dependencies
         run: |
-          pip install -U pip
+          python -m pip install --upgrade pip
           pip install poetry
           poetry install
-        env:
-          POETRY_VIRTUALENVS_CREATE: false
 
-      - name: View poetry --help
-        run: poetry --help
-
-    #   - name: Install dependencies
-    #     shell: bash
-    #     run: python -m poetry install
-
-      - name: Test
+      - name: Print Environment Variables
         run: |
-          python manage.py test
-      - name: Wemake Python Stylguide
-        uses: wemake-services/wemake-python-styleguide@0.16.0
-        continue-on-error: true
-        with:
-          reporter: 'github-pr-review'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "SECRET_KEY: ${{ secrets.SECRET_KEY }}"
+          echo "TOKEN: ${{ secrets.TOKEN }}"
+          # Imprima outras variáveis conforme necessário
+
+      - name: Run Tests
+        run: |
+          poetry run python manage.py test
