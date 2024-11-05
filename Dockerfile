@@ -4,6 +4,7 @@ FROM python:3.10-slim
 # Definir variáveis de ambiente
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONIOENCODING=utf-8
 
 # Definir diretório de trabalho
 WORKDIR /app
@@ -22,6 +23,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiar todo o código do projeto para o contêiner
 COPY . /app/
+
+# Exponha a porta 8000
+EXPOSE 8000
 
 # Comando para iniciar o servidor Django
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
