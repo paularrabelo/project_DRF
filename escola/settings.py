@@ -18,13 +18,8 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv("SECRET_KEY")
 
-if not SECRET_KEY:
-    raise ValueError("The SECRET_KEY setting must not be empty.")
-
-print(f"SECRET_KEY: {SECRET_KEY}")  # Para verificar se a chave está carregada
-
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'fallback-secret-key')
 
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
