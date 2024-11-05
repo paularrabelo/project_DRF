@@ -20,12 +20,6 @@ jobs:
           pip install poetry
           poetry install
 
-      - name: Print Environment Variables
-        run: |
-          echo "SECRET_KEY: ${{ secrets.SECRET_KEY }}"
-          echo "TOKEN: ${{ secrets.TOKEN }}"
-          # Imprima outras variáveis conforme necessário
-
       - name: Run Tests
         run: |
           poetry run python manage.py test
