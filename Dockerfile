@@ -4,6 +4,7 @@ FROM python:3.10-slim
 # Definir variáveis de ambiente
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONIOENCODING=utf-8
 
 # Definir diretório de trabalho
 WORKDIR /app
